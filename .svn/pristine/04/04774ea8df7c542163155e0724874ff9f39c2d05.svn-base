@@ -1,0 +1,25 @@
+#include<iostream.h>
+#include<fstream.h>
+#include<conio.h>
+#include<stdlib.h>
+int main()
+{
+  ofstream infile;
+  clrscr();
+  infile.open("new.txt");
+  if(!infile)
+  {
+    cout<<"File doesn't exist";
+    getch();
+    exit(0);
+  }
+  cout<<"Enter a string and end it with '$'";
+  char ch;
+  ch=cin.get();
+  do
+  {
+    infile.put(ch);
+  }while((ch=cin.get())!='$');
+  getch();
+  return 0;
+}

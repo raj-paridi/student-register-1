@@ -1,0 +1,29 @@
+<html>
+ <head>
+  <script>
+   var a,b,opt;
+   function option()
+   {
+    a=parseInt(window.prompt("enter the first value"));
+	b=parseInt(window.prompt("enter the second value"));	
+	opt=parseInt(window.prompt("Choose the option /n 1.Add /n 2.Sub /n 3.Mul /n 4.div"));
+	 if(opt==1)
+	  alert(a+b);
+	 else 
+	  if(opt==2)
+	   alert(a-b);
+	 else 
+	  if(opt==3)
+	   alert(a*b);
+	 else 
+	  if(opt==4)
+	   alert(a/b);
+	  else
+	   alert("Choose Correct option");
+    }
+  </script>
+ </head>
+ <body>
+  <a href="" onClick="return option();">Click For Operation</a> 
+ </body>
+</html>

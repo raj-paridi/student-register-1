@@ -1,0 +1,4 @@
+<html>
+<h1>Purchase Confirmed</h1>
+<h1>Thank u!</h1>
+</html>

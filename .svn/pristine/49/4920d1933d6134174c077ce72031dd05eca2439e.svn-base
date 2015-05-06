@@ -1,0 +1,322 @@
+<?php
+
+/**
+ * This is the model class for table "ceh_students".
+ *
+ * The followings are the available columns in table 'ceh_students':
+ * @property integer $id
+ * @property string $type
+ * @property string $roll_no
+ * @property string $password
+ * @property string $first_name
+ * @property string $last_name
+ * @property string $father_name
+ * @property string $mother_name
+ * @property string $mobile
+ * @property string $alternate_number
+ * @property string $email
+ * @property string $present_address
+ * @property string $permanent_address
+ * @property string $caste
+ * @property string $sub_caste
+ * @property string $father_occupation
+ * @property integer $father_income
+ * @property string $mother_occupation
+ * @property integer $mother_income
+ * @property string $home_phone
+ * @property string $father_mobile
+ * @property string $mother_mobile
+ * @property string $father_mail
+ * @property string $mother_mail
+ * @property string $gender
+ * @property string $dob
+ * @property string $marital_status
+ * @property string $religion
+ * @property string $blood_group
+ * @property string $photo
+ * @property string $school_name
+ * @property string $school_location
+ * @property string $school_board
+ * @property string $school_percentage
+ * @property string $inter_college_name
+ * @property string $inter_college_location
+ * @property string $inter_percentage
+ * @property integer $ug_district
+ * @property integer $ug_college
+ * @property integer $ug_course
+ * @property integer $ug_branch
+ * @property string $ug_regno
+ * @property string $ug_percentage
+ * @property integer $pg_district
+ * @property integer $pg_college
+ * @property integer $pg_course
+ * @property integer $pg_branch
+ * @property integer $pg_specialization
+ * @property string $pg_program_type
+ * @property string $pg_regno
+ * @property string $pg_percentage
+ * @property integer $phd_regno
+ * @property string $phd_branch
+ * @property string $phd_program_type
+ * @property string $phd_thesis_title
+ * @property string $phd_dor
+ * @property integer $registration_status
+ * @property string $profile_created_on
+ * @property string $registration_completed_on
+ * @property string $approved_on
+ * @property string $last_login_on
+ * @property string $remarks
+ * @property string $status
+ */
+class Students extends CActiveRecord
+{
+	public $password1,$password2,$otp1,$day,$month,$year,$home_phone_code,$home_phone_number,$phd_dor_day,$phd_dor_month,$phd_dor_year,$file_name;
+	/**
+	 * @return string the associated database table name
+	 */
+	public function tableName()
+	{
+		return 'ceh_students';
+	}
+
+	/**
+	 * @return array validation rules for model attributes.
+	 */
+	public function rules()
+	{
+		// NOTE: you should only define rules for those attributes that
+		// will receive user inputs.
+		return array(
+			array('roll_no','unique'),
+			array('course', 'required', 'on' => 'create_student'),
+			array('email','email'),
+			array('file_name', 'file', 'types'=>'xls','maxSize'=>5242880, 'tooLarge'=>'File has to be smaller than 5MB','allowEmpty'=>true),
+			array('first_name, last_name, password1, password2, mobile, email', 'required', 'on'=>'preregister'),
+			array('password2', 'compare', 'compareAttribute'=>'password1','on'=>'preregister,changepassword,resetpassword'),
+			array('otp1', 'required','on'=>'mobile_validation'),
+			array('otp1', 'otpvalidate', 'on'=>'mobile_validation'),
+			array('day, month, year, dob, gender, marital_status, religion, blood_group, caste, present_address, permanent_address', 'required', 'on'=>'personal_details_enter'),
+			array('father_name,father_occupation,father_income,father_mobile,mother_name,mother_occupation,mother_income', 'required', 'on'=>'parental_details_enter'),
+			array('school_name, school_location, school_board, school_percentage, inter_college_name, inter_board, inter_college_location, inter_percentage, ug_district, ug_college, ug_course, ug_branch, ug_regno, ug_percentage','required','on'=>'ug_educational_details_enter, pg_educational_details_enter, phd_educational_details_enter'),
+			array('pg_district, pg_college, pg_course, pg_branch, pg_specialization, pg_program_type, pg_regno, pg_percentage', 'required', 'on'=>'pg_educational_details_enter'),
+			array('pg_district, pg_college, pg_course, pg_branch, pg_specialization, pg_program_type, pg_regno, pg_percentage, phd_regno, phd_branch, phd_program_type, phd_thesis_title, phd_dor', 'required', 'on'=>'phd_educational_details_enter'),
+			array('photo', 'required', 'on'=>'other_details_enter'),
+			array('photo', 'file', 'types'=>'jpg, png','maxSize'=>10485760, 'tooLarge'=>'File has to be smaller than 10MB','allowEmpty'=>true),
+			array('father_income, mother_income, registration_status,mobile', 'numerical', 'integerOnly'=>true),
+			array('type, father_occupation, mother_occupation', 'length', 'max'=>50),
+			array('roll_no, alternate_number, home_phone', 'length', 'max'=>15),
+			array('password, first_name, email, photo,mother_mail,father_mail', 'length', 'max'=>250),
+			array('last_name, school_location, inter_college_location', 'length', 'max'=>100),
+			array('father_name, mother_name', 'length', 'max'=>350),
+			array('mobile, father_mobile,mother_mobile', 'length', 'max'=>12),
+			array('caste, pg_program_type, phd_program_type', 'length', 'max'=>10),
+			array('sub_caste', 'length', 'max'=>25),
+			array('gender', 'length', 'max'=>6),
+			array('marital_status', 'length', 'max'=>9),
+			array('religion', 'length', 'max'=>50),
+			array('blood_group', 'length', 'max'=>10),
+			array('school_percentage, inter_percentage, ug_percentage, pg_percentage', 'length', 'max'=>5),
+			array('school_name, inter_college_name, phd_branch, phd_thesis_title', 'length', 'max'=>300),
+			array('school_board, ug_regno, pg_regno', 'length', 'max'=>20),
+			array('status', 'length', 'max'=>8),
+			// The following rule is used by search().
+			// @todo Please remove those attributes that should not be searched.
+			array('id, type, course, roll_no, file_name, password, first_name, last_name, father_name, mother_name, mobile, alternate_number, email, present_address, permanent_address, caste, sub_caste, father_occupation, father_income, mother_occupation, mother_income, home_phone, father_mobile, mother_mobile, father_mail, mother_mail, gender, dob, marital_status, religion, blood_group, photo, school_name, school_location, school_board, school_percentage, inter_college_name, inter_college_location, inter_percentage, inter_board, ug_district, ug_college, ug_course, ug_branch, ug_regno, ug_percentage, pg_district, pg_college, pg_course, pg_branch, pg_specialization, pg_program_type, pg_regno, pg_percentage, phd_regno, phd_branch, phd_program_type, phd_thesis_title, phd_dor, registration_status, profile_created_on, registration_completed_on, approved_on, last_login_on, remarks, status, password1, password2, otp1, day, month, year, home_phone_code, home_phone_number', 'safe'),
+		);
+	}
+	public function otpvalidate($attribute,$params)
+   {
+	   if($this->otp1!=$this->otp)
+		 $this->addError($attribute, 'OTP Mismatch');
+   }
+
+	/**
+	 * @return array relational rules.
+	 */
+	public function relations()
+	{
+		// NOTE: you may need to adjust the relation name and the related
+		// class name for the relations automatically generated below.
+		return array(
+		);
+	}
+
+	/**
+	 * @return array customized attribute labels (name=>label)
+	 */
+	public function attributeLabels()
+	{
+		return array(
+			'id' => 'ID',
+			'type' => 'Type',
+			'roll_no' => 'Roll No',
+			'password' => 'Password',
+			'password1' => 'New Password',
+			'password2' => 'Confirm Password',
+			'first_name' => 'First Name',
+			'last_name' => 'Last Name',
+			'father_name' => 'Father Name',
+			'mother_name' => 'Mother Name',
+			'mobile' => 'Mobile',
+			'alternate_number' => 'Alternate Number',
+			'email' => 'Email',
+			'present_address' => 'Present Address',
+			'permanent_address' => 'Permanent Address',
+			'caste' => 'Caste',
+			'sub_caste' => 'Sub Caste',
+			'father_occupation' => 'Father Occupation',
+			'father_income' => 'Father Income',
+			'mother_occupation' => 'Mother Occupation',
+			'mother_income' => 'Mother Income',
+			'home_phone' => 'Home Phone',
+			'father_mobile' => 'Father Mobile',
+			'mother_mobile' => 'Mother Mobile',
+			'father_mail' => 'Father Mail',
+			'mother_mobile' => 'Mother Mail',
+			'gender' => 'Gender',
+			'dob' => 'Dob',
+			'marital_status' => 'Marital Status',
+			'religion' => 'Religion',
+			'blood_group' => 'Blood Group',
+			'photo' => 'Photo',
+			'school_name' => 'School Name',
+			'school_location' => 'Location',
+			'school_board' => 'Board',
+			'school_percentage' => 'Percentage/Grade',
+			'inter_college_name' => 'College Name',
+			'inter_college_location' => 'Location',
+			'inter_percentage' => 'Percentage/Grade',
+			'ug_district' => 'Ug District',
+			'ug_college' => 'College Name',
+			'ug_course' => 'Course',
+			'ug_branch' => 'Branch',
+			'ug_regno' => 'Regno',
+			'ug_percentage' => 'Percentage/Grade',
+			'pg_district' => 'Pg District',
+			'pg_college' => 'College Name',
+			'pg_course' => 'Course',
+			'pg_branch' => 'Branch',
+			'pg_specialization' => 'Specialization',
+			'pg_program_type' => 'Program Type',
+			'pg_regno' => 'Regno',
+			'pg_percentage' => 'Percentage/Grade',
+			'phd_regno' => 'Regno',
+			'phd_branch' => 'Branch',
+			'phd_program_type' => 'Program Type',
+			'phd_thesis_title' => 'Phd Thesis Title',
+			'phd_dor' => 'Date of Registration',
+			'registration_status' => 'Registration Status',
+			'profile_created_on' => 'Profile Created On',
+			'registration_completed_on' => 'Registration Completed On',
+			'approved_on' => 'Approved On',
+			'last_login_on' => 'Last Login On',
+			'remarks' => 'Remarks',
+			'status' => 'Status',
+		);
+	}
+
+	/**
+	 * Retrieves a list of models based on the current search/filter conditions.
+	 *
+	 * Typical usecase:
+	 * - Initialize the model fields with values from filter form.
+	 * - Execute this method to get CActiveDataProvider instance which will filter
+	 * models according to data in model fields.
+	 * - Pass data provider to CGridView, CListView or any similar widget.
+	 *
+	 * @return CActiveDataProvider the data provider that can return the models
+	 * based on the search/filter conditions.
+	 */
+	public function search()
+	{
+		// @todo Please modify the following code to remove attributes that should not be searched.
+
+		$criteria=new CDbCriteria;
+
+		$criteria->compare('id',$this->id);
+		$criteria->compare('type',$this->type,true);
+		$criteria->compare('roll_no',$this->roll_no,true);
+		$criteria->compare('password',$this->password,true);
+		$criteria->compare('first_name',$this->first_name,true);
+		$criteria->compare('last_name',$this->last_name,true);
+		$criteria->compare('father_name',$this->father_name,true);
+		$criteria->compare('mother_name',$this->mother_name,true);
+		$criteria->compare('mobile',$this->mobile,true);
+		$criteria->compare('alternate_number',$this->alternate_number,true);
+		$criteria->compare('email',$this->email,true);
+		$criteria->compare('present_address',$this->present_address,true);
+		$criteria->compare('permanent_address',$this->permanent_address,true);
+		$criteria->compare('caste',$this->caste,true);
+		$criteria->compare('sub_caste',$this->sub_caste,true);
+		$criteria->compare('father_occupation',$this->father_occupation,true);
+		$criteria->compare('father_income',$this->father_income);
+		$criteria->compare('mother_occupation',$this->mother_occupation,true);
+		$criteria->compare('mother_income',$this->mother_income);
+		$criteria->compare('home_phone',$this->home_phone,true);
+		$criteria->compare('father_mobile',$this->father_mobile,true);
+		$criteria->compare('mother_mobile',$this->mother_mobile,true);
+		$criteria->compare('father_mail',$this->father_mail,true);
+		$criteria->compare('mother_mail',$this->mother_mail,true);
+		$criteria->compare('gender',$this->gender,true);
+		$criteria->compare('dob',$this->dob,true);
+		$criteria->compare('marital_status',$this->marital_status,true);
+		$criteria->compare('religion',$this->religion,true);
+		$criteria->compare('blood_group',$this->blood_group,true);
+		$criteria->compare('photo',$this->photo,true);
+		$criteria->compare('school_name',$this->school_name,true);
+		$criteria->compare('school_location',$this->school_location,true);
+		$criteria->compare('school_board',$this->school_board,true);
+		$criteria->compare('school_percentage',$this->school_percentage,true);
+		$criteria->compare('inter_college_name',$this->inter_college_name,true);
+		$criteria->compare('inter_college_location',$this->inter_college_location,true);
+		$criteria->compare('inter_percentage',$this->inter_percentage,true);
+		$criteria->compare('ug_district',$this->ug_district);
+		$criteria->compare('ug_college',$this->ug_college);
+		$criteria->compare('ug_course',$this->ug_course);
+		$criteria->compare('ug_branch',$this->ug_branch);
+		$criteria->compare('ug_regno',$this->ug_regno,true);
+		$criteria->compare('ug_percentage',$this->ug_percentage,true);
+		$criteria->compare('pg_district',$this->pg_district);
+		$criteria->compare('pg_college',$this->pg_college);
+		$criteria->compare('pg_course',$this->pg_course);
+		$criteria->compare('pg_branch',$this->pg_branch);
+		$criteria->compare('pg_specialization',$this->pg_specialization);
+		$criteria->compare('pg_program_type',$this->pg_program_type,true);
+		$criteria->compare('pg_regno',$this->pg_regno,true);
+		$criteria->compare('pg_percentage',$this->pg_percentage,true);
+		$criteria->compare('phd_regno',$this->phd_regno);
+		$criteria->compare('phd_branch',$this->phd_branch,true);
+		$criteria->compare('phd_program_type',$this->phd_program_type,true);
+		$criteria->compare('phd_thesis_title',$this->phd_thesis_title,true);
+		$criteria->compare('phd_dor',$this->phd_dor,true);
+		$criteria->compare('registration_status',$this->registration_status);
+		$criteria->compare('profile_created_on',$this->profile_created_on,true);
+		$criteria->compare('registration_completed_on',$this->registration_completed_on,true);
+		$criteria->compare('approved_on',$this->approved_on,true);
+		$criteria->compare('last_login_on',$this->last_login_on,true);
+		$criteria->compare('remarks',$this->remarks,true);
+		$criteria->compare('status',$this->status,true);
+
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	}
+
+	/**
+	 * Returns the static model of the specified AR class.
+	 * Please note that you should have this exact method in all your CActiveRecord descendants!
+	 * @param string $className active record class name.
+	 * @return Students the static model class
+	 */
+	public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
+	public function fnSetLastLogin($id)
+	{
+		$sql="UPDATE ceh_students SET  `last_login_on` =  '".date('Y-m-d H:i:s')."' WHERE `id` =".$id;
+		$query = Yii::app()->db->createCommand($sql)->execute();
+		return $query;
+    }
+
+}

@@ -1,0 +1,141 @@
+."enter the filename"
+
+read fname
+
+echo "enter the starting line number"
+
+read s
+
+echo "enter the ending line number"
+
+read n
+ 
+
+sed -n $s,$n\p $fname | cat > newline
+
+cat newline
+output:
+
+[root@localhost ~]# vi 1s.sh
+
+[root@localhost ~]# ./1s.sh
+
+bash: ./1s.sh: Permission denied
+
+[root@localhost ~]# chmod 777 1s.sh
+
+[root@localhost ~]# ./1s.sh
+
+enter the filename
+
+sales.dat
+
+enter the starting line number
+
+2
+
+enter the ending line number
+
+4
+
+1       computers       9161
+
+1       textbooks       21312           2       clothing        3252
+
+
+
+
+6.
+
+set NUMBER=1234 // Pass the number as you want .
+set  REV=0 
+set TMP_NUM=$NUMBER
+while [ $NUMBER != $REV ]
+do
+     RMND = $TMP_NUM % 10 
+     REV= $RMND + 10*$REV
+     TMP_NUM=$TMP_NUM/10
+  done
+echo "The reverse Number is $REV"
+
+
+
+
+
+11.
+echo -n "Enter First Number : " 
+read n 
+echo -n "Enter Second Number : " 
+read m 
+while [ $n -gt $m ] 
+if [ $n -gt $m ] 
+n=`expr $n - $m ` 
+else 
+m=`expr $m - $n ` 
+wend 
+echo "Greates Common Divisor = " $n 
+
+
+
+
+
+12.
+echo "Enter a Number"
+read n
+ 
+echo "Enter Range"
+read r
+i=0
+while [ $n -le $r ]
+do
+    echo " $n x $i = `expr $n \* $i`"
+    i=`expr $i + 1`
+done
+
+
+
+echo Multiplication Table:
+echo Which table do you want ? (Give Number):
+read num
+iter=1
+while [ $num –le 5 ]
+do
+res=`expr $num \* $iter`
+echo $num “*” $iter “=” $res
+iter=`expr $iter + 1`
+done
+
+
+
+
+
+
+13.
+iter=1
+echo Enter new dir:
+read nn
+mkdir $nn
+echo Enter number of files:
+read na
+while [  $iter –le $na ]
+do
+echo Enter file name:
+read fn
+cp $fn $nn
+iter=`expr $iter + 1`
+done
+
+
+
+
+
+15.
+echo "List of Files which have Read, Write and Execute Permissions in Current Directory"
+for file in *
+do
+if [ -r $file -a -w $file -a -x $file ]
+then
+echo $file
+fi
+done
+

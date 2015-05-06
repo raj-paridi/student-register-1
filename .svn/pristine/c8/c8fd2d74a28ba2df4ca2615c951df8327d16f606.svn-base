@@ -1,0 +1,78 @@
+<?php
+$this->layout='column1';
+?>
+<style>
+#students-form { 
+margin: 0px;
+}
+.row{margin-left:0;}
+[class*="span"] { 
+margin-left:0px;
+margin-right:10px;
+}
+ .control-group{
+	 border-bottom:1px dashed #EEEEEE;
+	 padding-bottom:10px;
+	 margin-bottom:10px;
+ }
+.span3{width:235px;}
+.span6{width: 480px;}
+label { 
+color: #595959;
+font-family: "Arial", "Helvetica", sans-serif;
+font-size: 11px;
+font-weight: 400;
+margin-left:-5px;
+margin-bottom: 0px;
+}
+.ui-widget-content a {
+color: #0088cc; }
+</style>
+
+<div class="clear"></div>
+<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+	'id'=>'students-form',
+	'type'=>'horizontal',
+	'enableAjaxValidation'=>true,
+	'enableClientValidation'=>true,
+)); ?>
+<?php echo $this->renderPartial('/site/leftmenu', array('active'=>'changepassword')); ?>
+<p class="pull-right help-block">Fields with <span class="required">*</span> are required.</p>
+
+<div class="row">
+  <div class="span6 control-group"> 
+  <h2>Change Your Password</h2>
+  </br>
+  </br>
+
+<div class="row">
+    <div class="span3 control-group">
+		<?php echo $form->labelEx($model,'current_password'); ?> 
+		<?php echo $form->passwordField($model,'current_password'); ?> 
+		<?php echo $form->error($model,'current_password'); ?> 
+	</div>
+</div>
+
+<div class="row">
+    <div class="span3 control-group">
+		<?php echo $form->labelEx($model,'password1'); ?> 
+		<?php echo $form->passwordField($model,'password1'); ?> 
+		<?php echo $form->error($model,'password1'); ?> 
+	</div>
+</div>
+
+<div class="row">
+	<div class="span3 control-group"> 
+		<?php echo $form->labelEx($model,'password2'); ?> 
+		<?php echo $form->passwordField($model,'password2'); ?> 
+		<?php echo $form->error($model,'password2'); ?> 
+	</div>
+</div>
+
+<?php $this->widget('bootstrap.widgets.TbButton', array(
+			'buttonType'=>'submit',
+			'type'=>'primary',
+			'label'=>$model->isNewRecord ? 'Create' : 'Save',
+		)); ?>
+<?php $this->endWidget(); ?>
+

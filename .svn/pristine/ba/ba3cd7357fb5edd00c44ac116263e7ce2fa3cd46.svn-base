@@ -1,0 +1,19 @@
+<?php
+
+class CollegesController extends Controller
+{
+	public function actionGetColleges()	
+	{
+		$district = $_REQUEST['district'];
+		$sample = array(0 => array('id' => '','college' => 'Select College'));
+		$options = Yii::app()->db->createCommand()->select('id,college')->from('ceh_colleges')->where('district=:district', array(':district' => $district))->order('college')->queryAll();
+
+		$data = array_merge($sample, $options);
+		$data = CHtml::listData($data, 'id', 'college');
+
+		foreach ($data as $value => $option) 
+		{
+			echo CHtml::tag('option', array('value' => $value), CHtml::encode($option), true);
+		}
+	}	
+}

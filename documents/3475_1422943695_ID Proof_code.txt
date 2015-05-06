@@ -1,0 +1,28 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package myapplication;
+import java.awt.*;
+import java.io.Serializable;
+import javax.swing.JButton;
+public class MyApplication extends JButton implements Serializable{
+   public Image img;
+   public void setImage(Image i){
+       img=i;
+   }
+
+   public void paint(Graphics g){
+       if(img!=null)
+           g.drawImage(img,0,0,null);
+       else
+           g.setColor(Color.red);
+       Dimension size=getSize();
+       g.fillOval(0,0,size.width,size.height);
+   }
+    public static void main(String[] args) {
+        
+    }
+    
+}

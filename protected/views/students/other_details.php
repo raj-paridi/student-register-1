@@ -1,0 +1,13 @@
+<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+	'id'=>'students-form',
+	'type'=>'horizontal',
+	'enableAjaxValidation'=>false,
+	'enableClientValidation'=>false,
+	'htmlOptions'=>array('enctype'=>'multipart/form-data'),
+)); ?>
+
+<div class="row">
+  <div class="span3 control-group"> <?php echo $form->labelEx($model,'photo'); ?> <img src="<?php echo yii::app()->baseUrl.'/documents/images/'.$model->photo; ?>" width="100"/></div>
+</div>
+
+<?php $this->endWidget(); ?>

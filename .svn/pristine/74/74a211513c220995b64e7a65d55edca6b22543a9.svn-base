@@ -1,0 +1,17 @@
+<?php
+$this->breadcrumbs=array(
+	'Ceh Phd Vivas',
+);
+
+$this->menu=array(
+	array('label'=>'Create CehPhdViva','url'=>array('create')),
+	array('label'=>'Manage CehPhdViva','url'=>array('admin')),
+);
+?>
+
+<h1>Ceh Phd Vivas</h1>
+
+<?php $this->widget('bootstrap.widgets.TbListView',array(
+	'dataProvider'=>$dataProvider,
+	'itemView'=>'_view',
+)); ?>

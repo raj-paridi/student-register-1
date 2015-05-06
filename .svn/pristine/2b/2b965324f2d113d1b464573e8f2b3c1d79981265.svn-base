@@ -1,0 +1,20 @@
+<?php
+/* @var $this FeedbackController */
+/* @var $dataProvider CActiveDataProvider */
+
+$this->breadcrumbs=array(
+	'Feed Backs',
+);
+
+$this->menu=array(
+	array('label'=>'Create FeedBack', 'url'=>array('create')),
+	array('label'=>'Manage FeedBack', 'url'=>array('admin')),
+);
+?>
+
+<h1>Feed Backs</h1>
+
+<?php $this->widget('zii.widgets.CListView', array(
+	'dataProvider'=>$dataProvider,
+	'itemView'=>'_view',
+)); ?>

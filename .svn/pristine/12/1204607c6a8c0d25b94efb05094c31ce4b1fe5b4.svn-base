@@ -1,0 +1,18 @@
+<?php
+$this->breadcrumbs=array(
+	'Ceh Phd Vivas'=>array('index'),
+	$model->id=>array('view','id'=>$model->id),
+	'Update',
+);
+
+$this->menu=array(
+	array('label'=>'List CehPhdViva','url'=>array('index')),
+	array('label'=>'Create CehPhdViva','url'=>array('create')),
+	array('label'=>'View CehPhdViva','url'=>array('view','id'=>$model->id)),
+	array('label'=>'Manage CehPhdViva','url'=>array('admin')),
+);
+?>
+
+<h1>Update CehPhdViva <?php echo $model->id; ?></h1>
+
+<?php echo $this->renderPartial('_form',array('model'=>$model)); ?>

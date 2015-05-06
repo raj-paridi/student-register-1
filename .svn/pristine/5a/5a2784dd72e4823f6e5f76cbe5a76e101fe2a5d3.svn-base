@@ -1,0 +1,12 @@
+<?php
+/* @var $this FeedbackController */
+/* @var $model FeedBack */
+
+$this->breadcrumbs=array(
+	'Feed Backs'=>array('index'),
+	'Create',
+);
+?>
+<h1>Create FeedBack</h1>
+
+<?php $this->renderPartial('_form', array('model'=>$model)); ?>

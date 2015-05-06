@@ -1,0 +1,32 @@
+#include<iostream.h>
+#include<conio.h>
+#include<fstream.h>
+
+int main()
+{
+ clrscr();
+ ofstream fout("file.txt");
+ if(!fout)
+ {
+  cout<<"\nfile is not available";
+ }
+ fout<<"sahana";
+ /*
+ char s[30],c,t[30];
+ cout<<"\nenter string";
+ cin>>s;
+ fout<<s;      */
+ fout.close();
+
+ char t[30];
+ ifstream fin("file.txt");
+ cout<<"data is..";
+ fin>>t;
+ cout<<endl<<t;
+ fin.close();
+
+
+
+getch();
+return 0;
+}

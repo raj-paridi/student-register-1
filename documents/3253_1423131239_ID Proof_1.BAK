@@ -1,0 +1,25 @@
+#include<iostream.h>
+#include<fstream.h>
+int main()
+{
+char ch[20];
+int i;
+ifstream fin;
+ofstream fout;
+fout.open("a.txt");
+cout<<"enter data:";
+cin>>ch;
+while(ch[i]!='\0')
+{
+fout<<ch[i];
+ch[i]=fout.put();
+}
+fout.close();
+fin.open("a.txt");
+while(ch!=EOF)
+{
+cout<<ch;
+ch=fin.get();
+}
+getch();
+}

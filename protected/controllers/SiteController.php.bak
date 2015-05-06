@@ -1,0 +1,176 @@
+<?php
+
+class SiteController extends Controller
+{
+	/**
+	 * Declares class-based actions.
+	 */
+	public function actions()
+	{
+		return array(
+			// captcha action renders the CAPTCHA image displayed on the contact page
+			'captcha'=>array(
+				'class'=>'CCaptchaAction',
+				'backColor'=>0xFFFFFF,
+			),
+			// page action renders "static" pages stored under 'protected/views/site/pages'
+			// They can be accessed via: index.php?r=site/page&view=FileName
+			'page'=>array(
+				'class'=>'CViewAction',
+			),
+		);
+	}
+
+	/**
+	 * This is the default 'index' action that is invoked
+	 * when an action is not explicitly requested by users.
+	 */
+	public function actionIndex()
+	{
+		// renders the view file 'protected/views/site/index.php'
+		// using the default layout 'protected/views/layouts/main.php'
+		$this->render('index');
+	}
+
+	/**
+	 * This is the action to handle external exceptions.
+	 */
+	public function actionError()
+	{
+		if($error=Yii::app()->errorHandler->error)
+		{
+			if(Yii::app()->request->isAjaxRequest)
+				echo $error['message'];
+			else
+				$this->render('error', $error);
+		}
+	}
+
+	/**
+	 * Displays the contact page
+	 */
+	public function actionContact()
+	{
+		$model=new ContactForm;
+		if(isset($_POST['ContactForm']))
+		{
+			$model->attributes=$_POST['ContactForm'];
+			if($model->validate())
+			{
+				$name='=?UTF-8?B?'.base64_encode($model->name).'?=';
+				$subject='=?UTF-8?B?'.base64_encode($model->subject).'?=';
+				$headers="From: $name <{$model->email}>\r\n".
+					"Reply-To: {$model->email}\r\n".
+					"MIME-Version: 1.0\r\n".
+					"Content-Type: text/plain; charset=UTF-8";
+
+				mail(Yii::app()->params['adminEmail'],$subject,$model->body,$headers);
+				Yii::app()->user->setFlash('contact','Thank you for contacting us. We will respond to you as soon as possible.');
+				$this->refresh();
+			}
+		}
+		$this->render('contact',array('model'=>$model));
+	}
+
+	/**
+	 * Displays the login page
+	 */
+	public function actionLogin()
+	{
+		$model=new LoginForm;
+
+		// if it is ajax validation request
+		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
+		{
+			echo CActiveForm::validate($model);
+			Yii::app()->end();
+		}
+
+		// collect user input data
+		if(isset($_POST['LoginForm']))
+		{
+			$model->attributes=$_POST['LoginForm'];
+			// validate user input and redirect to the previous page if valid
+			if($model->validate() && $model->login())
+			{
+				Yii::app()->user->setFlash(TbHtml::ALERT_COLOR_SUCCESS,
+    '<strong>Well done!</strong> You successfully logged in.');
+				if(yii::app()->user->role=='Student')
+					$this->redirect(Yii::app()->baseUrl.'/students/index');
+				else if(yii::app()->user->role==1)
+					$this->redirect(Yii::app()->baseUrl.'/admin/index');
+				else if(yii::app()->user->role==2)
+					$this->redirect(Yii::app()->baseUrl.'/hod/index');
+				else
+					$this->redirect(Yii::app()->baseUrl.'/representative/index');
+			}
+		}
+		// display the login form
+		$this->render('login',array('model'=>$model));
+	}
+
+	public function actionForgot()
+	{
+		$model = new ForgotForm;
+		if(isset($_POST['ForgotForm']))
+		{
+			$model->attributes=$_POST['ForgotForm'];
+			$roll_no=$_POST['ForgotForm']['roll_no'];
+			$mobile=$_POST['ForgotForm']['mobile'];
+			$result = Yii::app()->db->createCommand()->select('id')->from('ceh_students')->where('roll_no=:roll_no AND mobile=:mobile', array(':roll_no' => $roll_no, ':mobile'=>$mobile))->queryAll();
+			$count=sizeof($result);
+			if($count==1)
+			{
+				$student=Students::model()->findByAttributes(array('roll_no'=>$roll_no,'mobile'=>$mobile));
+				$student->otp=SMSGateway::model()->generateOTP();
+				//$url=SMSGateway::model()->sendSMS($student->mobile,'Your JNTUHCEH verification code is '.$student->otp);
+				$student->save();
+				Yii::app()->user->setFlash('success','You have an account in this site');
+				$this->redirect(Yii::app()->baseUrl.'/site/forgotvalidation');
+			}
+			else
+			{
+				Yii::app()->user->setFlash('error','Your Roll_no or Mobile numbers are wrong; please enter correct one');
+				$this->redirect(Yii::app()->baseUrl.'/site/forgot');
+			}
+		}
+		$this->render('forgot',array('model'=>$model));
+	}
+
+	//action forgot validation request
+	public function actionForgotvalidation()
+	{
+		$model = new ForgotValidationForm;
+		if(isset($_POST['ForgotValidationForm']))
+		{
+			$model->attributes=$_POST['ForgotValidationForm'];
+			$roll_no=$_POST['ForgotValidationForm']['roll_no'];
+			$otp=$_POST['ForgotValidationForm']['otp'];
+			$password1=$_POST['ForgotValidationForm']['password1'];
+			$password2=$_POST['ForgotValidationForm']['password2'];
+			if($password1 === $password2 && $password1 != '')
+			{
+				$student = Yii::app()->db->createCommand()->select('id')->from('ceh_students')->where('roll_no=:roll_no AND otp=:otp', array(':roll_no' => $roll_no, ':otp'=>$otp))->queryAll();
+				$count=sizeof($student);
+				if($count==1)
+				{
+					$student=Students::model()->findByAttributes(array('roll_no'=>$roll_no,'otp'=>$otp));
+					$student->password=md5($password1);
+					$student->save();
+					Yii::app()->user->setFlash('success','Your Password successfully changed');
+					$this->redirect(Yii::app()->baseUrl.'/site/login');
+
+				}
+			}
+		}
+		$this->render('forgotvalidation',array('model'=>$model));
+	}
+	/**
+	 * Logs out the current user and redirect to homepage.
+	 */
+	public function actionLogout()
+	{
+		Yii::app()->user->logout();
+		$this->redirect(Yii::app()->baseUrl);
+	}
+}

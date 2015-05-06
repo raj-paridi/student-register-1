@@ -1,0 +1,45 @@
+<?php
+$this->layout='column1';
+?>
+<h3 class="pull-left">Change Your Password</h3>
+<p class="pull-right help-block">Fields with <span class="required">*</span> are required.</p>
+<div class="clear"></div>
+<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+	'id'=>'students-form',
+	'type'=>'horizontal',
+	'enableAjaxValidation'=>true,
+	'enableClientValidation'=>true,
+)); ?>
+<?php echo $this->renderPartial('/site/leftmenu', array('active'=>'my_profile')); ?>
+<div class="pull-right w790">
+<div class="row">
+    <div class="span3 control-group"> 
+		<?php echo $form->labelEx($model,'current_password'); ?> 
+		<?php echo $form->passwordField($model,'current_password'); ?> 
+		<?php echo $form->error($model,'current_password'); ?> 
+	</div>
+</div>
+
+<div class="row">
+    <div class="span3 control-group"> 
+		<?php echo $form->labelEx($model,'password1'); ?> 
+		<?php echo $form->passwordField($model,'password1'); ?> 
+		<?php echo $form->error($model,'password1'); ?> 
+	</div>
+</div>
+
+<div class="row">
+	<div class="span3 control-group"> 
+		<?php echo $form->labelEx($model,'password2'); ?> 
+		<?php echo $form->passwordField($model,'password2'); ?> 
+		<?php echo $form->error($model,'password2'); ?> 
+	</div>
+</div>
+
+<?php $this->widget('bootstrap.widgets.TbButton', array(
+			'buttonType'=>'submit',
+			'type'=>'primary',
+			'label'=>$model->isNewRecord ? 'Create' : 'Save',
+		)); ?>
+<?php $this->endWidget(); ?>
+

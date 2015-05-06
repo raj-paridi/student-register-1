@@ -1,0 +1,106 @@
+
+<?php
+$this->layout='column1';
+?>
+<style>
+#students-form { 
+margin: 0px;
+}
+.row{margin-left:0;}
+[class*="span"] { 
+margin-left:0px;
+margin-right:10px;
+}
+ .control-group{
+	 border-bottom:1px dashed #EEEEEE;
+	 padding-bottom:10px;
+	 margin-bottom:10px;
+ }
+.span3{width:235px;}
+.span6{width: 480px;}
+label { 
+color: #595959;
+font-family: "Arial", "Helvetica", sans-serif;
+font-size: 11px;
+font-weight: 400;
+margin-left:-5px;
+margin-bottom: 0px;
+}
+.ui-widget-content a {
+color: #0088cc; }
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    background-color: #b0e0e6;
+}
+</style>
+
+
+
+
+
+
+
+<?php if ($student->type=='PHD') {?>
+
+<div class="clear"></div>
+<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+	'id'=>'ceh-phd-viva-form',
+	'enableAjaxValidation'=>false,
+	'htmlOptions'=>array('enctype'=>'multipart/form-data'),
+)); ?>
+<?php echo $this->renderPartial('/site/leftmenu', array('active'=>'create')); ?>
+<p class="pull-right help-block">Fields with <span class="required">*</span> are required.</p>
+	<?php echo $form->errorSummary($model); ?>
+
+<div class="row">
+  <div class="span6 control-group"> 
+  <h2>Ph.D Viva Examination Details</h2>
+  </br>
+  
+  <div class="row">
+  <div class="span3 control-group"> 
+    <?php echo $form->labelEx($model,'date_of_exam'); ?> <?php echo $form->dropDownlist($model,'day',array(''=>'Day','01'=>'01','02'=>'02','03'=>'03','04'=>'04','05'=>'05','06'=>'06','07'=>'07','08'=>'08','09'=>'09','10'=>'10','11'=>'11','12'=>'12','13'=>'13','14'=>'14','15'=>'15','16'=>'16','17'=>'17','18'=>'18','19'=>'19','20'=>'20','21'=>'21','22'=>'22','23'=>'23','24'=>'24','25'=>'25','26'=>'26','27'=>'27','28'=>'28','29'=>'29','30'=>'30','31'=>'31'),array('style'=>'width:60px')); ?> <?php echo $form->dropDownlist($model,'month',array(''=>'Month','01'=>'Jan','02'=>'Feb','03'=>'Mar','04'=>'Apr','05'=>'May','06'=>'Jun','07'=>'Jul','08'=>'Aug','09'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec'),array('style'=>'width:78px')); ?> <?php echo $form->dropDownlist($model,'year',array(''=>'Year','2000'=>'2000','2001'=>'2001','2002'=>'2002','2003'=>'2003','2004'=>'2004','2005'=>'2005','2006'=>'2006','2007'=>'2007','2008'=>'2008','2009'=>'2009','2010'=>'2010','2011'=>'2011','2012'=>'2012','2013'=>'2013','2014'=>'2014'),array('style'=>'width:70px',)); ?> <?php echo $form->error($model,'day'); ?> <?php echo $form->error($model,'month'); ?> <?php echo $form->error($model,'year'); ?>
+	<?php echo $form->textFieldRow($model,'student_name',array('readonly'=>true),array('class'=>'span5','maxlength'=>100)); ?>
+
+	<?php echo $form->textFieldRow($model,'roll_no',array('readonly'=>true),array('class'=>'span5','maxlength'=>12)); ?>
+
+	<?php echo $form->textFieldRow($model,'st_designation',array('class'=>'span5','maxlength'=>100)); ?>
+
+	<?php echo $form->textFieldRow($model,'st_place_of_work',array('class'=>'span5','maxlength'=>400)); ?>
+
+	<?php echo $form->textAreaRow($model,'address',array('readonly'=>true),array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
+
+	<?php echo $form->textFieldRow($model,'mobile',array('readonly'=>true),array('class'=>'span5','maxlength'=>13)); ?>
+
+	<?php echo $form->textFieldRow($model,'area_of_work',array('class'=>'span5','maxlength'=>100)); ?>
+
+	<?php echo $form->textFieldRow($model,'supervisor_name',array('class'=>'span5','maxlength'=>100)); ?>
+
+	<?php echo $form->textFieldRow($model,'su_designation',array('class'=>'span5','maxlength'=>100)); ?>
+
+	<?php echo $form->textFieldRow($model,'su_place_of_work',array('class'=>'span5','maxlength'=>400)); ?>
+
+	<?php echo $form->textFieldRow($model,'examiner_name',array('class'=>'span5','maxlength'=>100)); ?>
+
+	<?php echo $form->textFieldRow($model,'ex_designation',array('class'=>'span5','maxlength'=>400)); ?>
+
+	<?php echo $form->textFieldRow($model,'ex_place_of_work',array('class'=>'span5','maxlength'=>400)); ?>
+	<?php echo $form->labelEx($model,'file_name'); ?>
+	<?php echo CHtml::activeFileField($model,'file_name',array('required'=>'required')); ?> 
+	<?php echo $form->error($model,'file_name'); ?>
+	<div class="form-actions">
+		<?php $this->widget('bootstrap.widgets.TbButton', array(
+			'buttonType'=>'submit',
+			'type'=>'primary',
+			'label'=>'Save',
+		)); ?>
+	</div>
+
+
+
+<?php }else { ?>
+<h2>You are not belonging to phd<h2>
+<?php } ?>
+<?php $this->endWidget(); ?>

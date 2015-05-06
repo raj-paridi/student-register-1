@@ -1,0 +1,9 @@
+<html>
+<h1>Make payment<h1>
+<form action="action_page.php">
+Card number:<br>
+<input type="text" name="Cardno">
+<br>
+<br>
+<input type="submit" value="Submit">
+</html>

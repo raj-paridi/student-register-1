@@ -1,0 +1,40 @@
+<?php
+$this->layout='column1';
+?>
+
+<h3 class="pull-left">Create Student Profile</h3>
+<p class="pull-right help-block">Fields with <span class="required">*</span> are required.</p>
+<div class="clear"></div>
+<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+	'id'=>'students-form',
+	'type'=>'horizontal',
+	'enableAjaxValidation'=>true,
+	'enableClientValidation'=>true,
+)); ?>
+<?php echo $form->errorSummary($model); ?>
+
+<div class="row">
+  <div class="span3 control-group"> <?php echo $form->labelEx($model,'first_name'); ?> <?php echo $form->textField($model,'first_name'); ?> <?php echo $form->error($model,'first_name'); ?> </div>
+  <div class="span3 control-group"> <?php echo $form->labelEx($model,'last_name'); ?> <?php echo $form->textField($model,'last_name'); ?> <?php echo $form->error($model,'last_name'); ?> </div>
+</div>
+<!--
+<div class="row">
+  <div class="span6 control-group"> <?php echo $form->labelEx($model,'full_name'); ?> <?php echo $form->textField($model,'full_name',array('style'=>'width:506px;')); ?> <?php echo $form->error($model,'full_name'); ?> </div>
+</div>
+-->
+<div class="row">
+  <div class="span3 control-group"> <?php echo $form->labelEx($model,'email'); ?> <?php echo $form->textField($model,'email'); ?> <?php echo $form->error($model,'email'); ?> </div>
+  <div class="span3 control-group"> <?php echo $form->labelEx($model,'mobile'); ?> <?php echo $form->textField($model,'mobile'); ?> <?php echo $form->error($model,'mobile'); ?> </div>
+
+</div>
+    <div class="row">
+    <div class="span3 control-group"> <?php echo $form->labelEx($model,'password1'); ?> <?php echo $form->passwordField($model,'password1'); ?> <?php echo $form->error($model,'password1'); ?> </div>
+    <div class="span3 control-group"> <?php echo $form->labelEx($model,'password2'); ?> <?php echo $form->passwordField($model,'password2'); ?> <?php echo $form->error($model,'password2'); ?> </div>
+  </div>
+
+<?php $this->widget('bootstrap.widgets.TbButton', array(
+			'buttonType'=>'submit',
+			'type'=>'primary',
+			'label'=>$model->isNewRecord ? 'Create' : 'Save',
+		)); ?>
+<?php $this->endWidget(); ?>

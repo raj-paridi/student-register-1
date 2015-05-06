@@ -1,0 +1,17 @@
+<?php
+$this->breadcrumbs=array(
+	'Pg Dissertations',
+);
+
+$this->menu=array(
+	array('label'=>'Create PgDissertation','url'=>array('create')),
+	array('label'=>'Manage PgDissertation','url'=>array('admin')),
+);
+?>
+
+<h1>Pg Dissertations</h1>
+
+<?php $this->widget('bootstrap.widgets.TbListView',array(
+	'dataProvider'=>$dataProvider,
+	'itemView'=>'_view',
+)); ?>

@@ -1,0 +1,40 @@
+<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+	'id'=>'pg-dissertation-form',
+	'enableAjaxValidation'=>false,
+	'htmlOptions'=>array('enctype'=>'multipart/form-data'),
+)); ?>
+
+	<p class="help-block">Fields with <span class="required">*</span> are required.</p>
+
+	<?php echo $form->errorSummary($model); ?>
+
+	<?php echo $form->textFieldRow($model,'name',array('class'=>'span5','maxlength'=>100)); ?>
+
+	<?php echo $form->textFieldRow($model,'roll_no',array('class'=>'span5','maxlength'=>11)); ?>
+
+	<?php echo $form->labelEx($model,'course'); ?>
+	<?php echo $form->dropDownlist($model,'course',array(''=>'Course','MCA'=>'MCA','M.TECH'=>'M.TECH')); ?>
+	
+
+	<?php echo $form->textFieldRow($model,'area_of_work',array('class'=>'span5','maxlength'=>250)); ?>
+
+	<?php echo $form->textFieldRow($model,'institute_name',array('class'=>'span5','maxlength'=>250)); ?>
+
+	<?php echo $form->textFieldRow($model,'guide_name',array('class'=>'span5','maxlength'=>100)); ?>
+
+	<div class="row">
+  <div class="span3 control-group"> 
+    <?php echo $form->labelEx($model,'date_of_reg'); ?> <?php echo $form->dropDownlist($model,'day',array(''=>'Day','01'=>'01','02'=>'02','03'=>'03','04'=>'04','05'=>'05','06'=>'06','07'=>'07','08'=>'08','09'=>'09','10'=>'10','11'=>'11','12'=>'12','13'=>'13','14'=>'14','15'=>'15','16'=>'16','17'=>'17','18'=>'18','19'=>'19','20'=>'20','21'=>'21','22'=>'22','23'=>'23','24'=>'24','25'=>'25','26'=>'26','27'=>'27','28'=>'28','29'=>'29','30'=>'30','31'=>'31'),array('style'=>'width:60px')); ?> <?php echo $form->dropDownlist($model,'month',array(''=>'Month','01'=>'Jan','02'=>'Feb','03'=>'Mar','04'=>'Apr','05'=>'May','06'=>'Jun','07'=>'Jul','08'=>'Aug','09'=>'Sep','10'=>'Oct','11'=>'Nov','12'=>'Dec'),array('style'=>'width:78px')); ?> <?php echo $form->dropDownlist($model,'year',array(''=>'Year','2000'=>'2000','2001'=>'2001','2002'=>'2002','2003'=>'2003','2004'=>'2004','2005'=>'2005','2006'=>'2006','2007'=>'2007','2008'=>'2008','2009'=>'2009','2010'=>'2010','2011'=>'2011','2012'=>'2012','2013'=>'2013','2014'=>'2014'),array('style'=>'width:70px',)); ?> <?php echo $form->error($model,'day'); ?> <?php echo $form->error($model,'month'); ?> <?php echo $form->error($model,'year'); ?>
+	<?php echo $form->labelEx($model,'file_name'); ?>
+	<?php echo CHtml::activeFileField($model,'file_name',array('required'=>'required')); ?> 
+	<?php echo $form->error($model,'file_name'); ?>
+
+	<div class="form-actions">
+		<?php $this->widget('bootstrap.widgets.TbButton', array(
+			'buttonType'=>'submit',
+			'type'=>'primary',
+			'label'=>'Save',
+		)); ?>
+	</div>
+
+<?php $this->endWidget(); ?>

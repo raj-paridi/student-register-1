@@ -1,0 +1,106 @@
+#include<stdio.h>
+#include<iostream.h>
+#include<conio.h>
+class complex{
+public:
+float rp,ip;
+void read()
+{
+cout<<"enter real and imaginary parts of number";
+cin>>rp>>ip;
+}
+void write(complex c)
+{
+cout<<"the complex no. is"<<" "<<c.rp<<"+i"<<c.ip<<endl;
+}
+void add(complex c1,complex c2)
+{
+complex c3;
+c3.rp=c1.rp+c2.rp;
+c3.ip=c1.ip+c2.ip;
+cout<<"after addition"<<endl;
+write(c3);
+}
+void sub(complex c1,complex c2)
+
+{
+complex c3;
+c3.rp=c1.rp+c2.rp;
+c3.ip=c1.ip+c2.ip;
+cout<<"after addition"<<endl;
+write(c3);
+}
+void mul(complex c1,complex c2)
+{
+complex c3;
+c3.rp=(c1.rp*c2.rp)-(c1.ip*c2.ip);
+c3.ip=(c1.rp*c2.ip)-(c1.ip*c2.rp);
+cout<<"after multiplication"<<endl;
+write(c3);
+}
+void div(complex c1,complex c2)
+{
+complex c3;
+c3.rp=(c1.rp*c2.rp)-(c1.ip*c2.ip);
+c3.ip=(c1.rp*c2.ip)-(c1.ip*c2.rp);
+cout<<"after multiplication"<<endl;
+write(c3);
+}
+
+//void write(complex c)
+
+};
+/*complex::void read()
+{
+cout<<"enter real and imaginary parts of number";
+cin>>rp>>ip;
+} */
+/*complex:: write(complex c)
+{
+cout<<"the complex no. is"<<" "<<rp<<"+i"<<ip<<endl;
+} */
+/*complex::void add(complex c1,complex c2)
+{
+complex c3;
+c3.rp=c1.rp+c2.rp;
+c3.ip=c1.ip+c2.ip;
+cout<<"after addition"<<endl;
+write(c3);
+} */
+/*complex::void sub(complex c1,complex c2)
+{
+complex c3;
+c3.rp=c1.rp+c2.rp;
+c3.ip=c1.ip+c2.ip;
+cout<<"after addition"<<endl;
+write(c3);
+} */
+/*complex::void mul(complex c1,complex c2)
+{
+complex c3;
+c3.rp=(c1.rp*c2.rp)-(c1.ip*c2.ip);
+c3.ip=(c1.rp*c2.ip)-(c1.ip*c2.rp);
+cout<<"after multiplication"<<endl;
+write(c3);
+} */
+//complex::complex  div(complex c1,complex c2)
+//{
+int main()
+{
+complex c1,c2,c3;
+c1.read();
+c1.write(c1);
+c2.read();
+c2.write(c2);
+c3.add(c1,c2);
+c3.sub(c1,c2);
+c3.mul(c1,c2);
+c3.div(c1,c2);
+ return 0;
+ getche();
+}
+
+
+
+
+

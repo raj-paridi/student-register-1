@@ -1,0 +1,24 @@
+#include<iostream>
+#include<conio.h>
+#include<stdlib.h>
+#include<fstream>
+int main()
+{
+  ifstream outfile("new.txt");
+  clrscr();
+  if(!outfile)
+  {
+    cout<<"File doesn't exist";
+    getch();
+    exit(0);
+  }
+  char ch;
+  cout<<"The contents of file are....\n";
+  while(!outfile.eof())
+  {
+    ch=outfile.get();
+    cout<<ch;
+  }
+  getch();
+  return 0;
+}

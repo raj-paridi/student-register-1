@@ -1,0 +1,126 @@
+#include<iostream.h>
+#include<conio.h>
+#include<stdlib.h>
+#include<limits.h>
+class AVL
+{
+typedef struct Gnode
+{
+int data;
+int BF;
+struct Gnode *left,*right;
+}node;
+int i;
+public:
+node * insert(int x);
+node * create(int x,node *New,int &current);
+void inorder(node *root);
+};
+node * AVL::insert(int x)
+{
+int current;
+root=create(x,node *New,&current);
+return root;
+}
+node * AVL::create(int x,node *root,int &current)
+{
+if(root==NULL)
+{
+New=new node;
+New->data=x;
+New->left=NULL;
+New->right=NULL;
+New->BF=0;
+current =1;
+return New;
+}
+else
+{
+if(x<root->data)
+{
+ node *temp1,*temp2;
+ create(root->right,root,&current)
+ if(*current)
+ switch(BF)
+ {
+ case 1:cout<<"\n single rotation LL";
+	temp1=root->right;
+	root->left=temp1->right;
+	temp1->right=root;
+	root=temp1;
+	root->BF=0;
+	//current=1;
+	break;
+
+ case 0:root->BF=-1;
+	break;
+
+ case -1:cout<<"\n double rotationLR";
+	 root->left=temp1->right;
+	 temp1->right=temp2->left;
+	 temp2->left=root;
+	 root->left=temp2->right;
+	 temp2->right=temp1->left;
+	 root=temp2;
+	 root->BF=0;
+
+  }
+  current=1;
+  return root;
+  }
+if(x>root->data)
+{
+ node *temp1,*temp2;
+ create(root->right,root,&current)
+ if(*current)
+ switch(BF)
+ {
+ case 1:cout<<"\n single rotation RR";
+	temp1=root->left;
+	root->root=temp1->left;
+	temp1->left=root;
+	root=temp1;
+	root->BF=0;
+	//current=1;
+	break;
+
+ case 0:root->BF=-1;
+	break;
+
+ case -1:cout<<"\n double rotationRR";
+	 root->right=temp1->left;
+	 temp1->right=temp2->left;
+	 temp2->right=root;
+	 root->right=temp2->left;
+	 temp2->left=temp1->right;
+	 root=temp2;
+	 root->BF=0;
+
+  }
+  current=1;
+  return root;
+
+ }
+ }
+ void AVL::inorder(node *root)
+ {
+ inorder(root->left);
+ cout<<root->data
+ inorder(root->right);
+}
+int main()
+{
+char ch;
+AVL obj;
+int x,current;
+obj.node *root;
+root=NULL;
+clrscr();
+do
+{
+cout<<"\n enter an element to insert";
+cin>>x;
+obj.insert(x,root,&current);
+cout<<"\n do u want to enter more elements";
+cin>>ch;
+}while(ch=='y'||ch=='Y');

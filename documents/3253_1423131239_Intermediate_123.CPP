@@ -1,0 +1,30 @@
+#include<iostream.h>
+#include<conio.h>
+void main()
+{
+int a[10],n,i,j,temp;
+clrscr();
+cout<<"enter the no of elements:";
+cin>>n;
+cout<<"enter the array elements:";
+for(i=0;i<n;i++)
+cin>>a[i];
+for(i=0;i<n;i++)
+{
+for(j=1;j<n-1;j++)
+{
+if(a[i]>a[j+1])
+{
+temp=a[i];
+a[i]=a[j+1];
+a[j+1]=temp;
+}
+}
+]
+cout<<"elements after sorting:";
+for(i=0;i<n;i++)
+cin>>a[i];
+getch();
+}
+
+

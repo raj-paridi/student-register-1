@@ -1,0 +1,117 @@
+<?php
+
+/**
+ * This is the model class for table "ceh_student_documents".
+ *
+ * The followings are the available columns in table 'ceh_student_documents':
+ * @property integer $id
+ * @property integer $student_id
+ * @property string $document_type
+ * @property string $document
+ * @property string $file_name
+ * @property string $uploaded_on
+ * @property string $status
+ */
+class StudentDocuments extends CActiveRecord
+{
+	public $document_type1, $document_type2, $document_type3, $document_type4, $document_type5, $document1, $document2, $document3, $document4, $document5, $file_name1, $file_name2, $file_name3, $file_name4, $file_name5;
+	
+	/**
+	 * @return string the associated database table name
+	 */
+	public function tableName()
+	{
+		return 'ceh_student_documents';
+	}
+
+	/**
+	 * @return array validation rules for model attributes.
+	 */
+	public function rules()
+	{
+		// NOTE: you should only define rules for those attributes that
+		// will receive user inputs.
+		return array(
+			array('student_id, document_type, document, file_name, uploaded_on', 'required'),
+			array('student_id', 'numerical', 'integerOnly'=>true),
+			array('document_type', 'length', 'max'=>100),
+			array('document', 'length', 'max'=>150),
+			array('file_name', 'length', 'max'=>300),
+			array('status', 'length', 'max'=>8),
+			array('file_name', 'file', 'types'=>'jpg, png, pdf, zip','maxSize'=>10485760, 'tooLarge'=>'File has to be smaller than 10MB','allowEmpty'=>true),
+			array('id, student_id, document_type, document, file_name, status, document_type1, document_type2, document_type3, document_type4, document_type5, document1, document2, document3, document4, document5, file_name1, file_name2, file_name3, file_name4, file_name5', 'safe'),
+			// The following rule is used by search().
+			// @todo Please remove those attributes that should not be searched.
+			array('id, student_id, document_type, document, file_name, uploaded_on, status', 'safe', 'on'=>'search'),
+		);
+	}
+
+	/**
+	 * @return array relational rules.
+	 */
+	public function relations()
+	{
+		// NOTE: you may need to adjust the relation name and the related
+		// class name for the relations automatically generated below.
+		return array(
+		);
+	}
+
+	/**
+	 * @return array customized attribute labels (name=>label)
+	 */
+	public function attributeLabels()
+	{
+		return array(
+			'id' => 'ID',
+			'student_id' => 'Student',
+			'document_type' => 'Document Type',
+			'document' => 'Document',
+			'file_name' => 'File Name',
+			'uploaded_on' => 'Uploaded On',
+			'status' => 'Status',
+		);
+	}
+
+	/**
+	 * Retrieves a list of models based on the current search/filter conditions.
+	 *
+	 * Typical usecase:
+	 * - Initialize the model fields with values from filter form.
+	 * - Execute this method to get CActiveDataProvider instance which will filter
+	 * models according to data in model fields.
+	 * - Pass data provider to CGridView, CListView or any similar widget.
+	 *
+	 * @return CActiveDataProvider the data provider that can return the models
+	 * based on the search/filter conditions.
+	 */
+	public function search()
+	{
+		// @todo Please modify the following code to remove attributes that should not be searched.
+
+		$criteria=new CDbCriteria;
+
+		$criteria->compare('id',$this->id);
+		$criteria->compare('student_id',$this->student_id);
+		$criteria->compare('document_type',$this->document_type,true);
+		$criteria->compare('document',$this->document,true);
+		$criteria->compare('file_name',$this->file_name,true);
+		$criteria->compare('uploaded_on',$this->uploaded_on,true);
+		$criteria->compare('status',$this->status,true);
+
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	}
+
+	/**
+	 * Returns the static model of the specified AR class.
+	 * Please note that you should have this exact method in all your CActiveRecord descendants!
+	 * @param string $className active record class name.
+	 * @return StudentDocuments the static model class
+	 */
+	public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
+}

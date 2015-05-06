@@ -1,0 +1,29 @@
+<?php
+$this->breadcrumbs=array(
+	'Ceh Phd Vivas'=>array('index'),
+	$model->id,
+);
+?>
+<h1>View CehPhdViva #<?php echo $model->id; ?></h1>
+
+<?php $this->widget('bootstrap.widgets.TbDetailView',array(
+	'data'=>$model,
+	'attributes'=>array(
+		'id',
+		'date_of_exam',
+		'student_name',
+		'roll_no',
+		'st_designation',
+		'st_place_of_work',
+		'address',
+		'mobile',
+		'area_of_work',
+		'supervisor_name',
+		'su_designation',
+		'su_place_of_work',
+		'examiner_name',
+		'ex_designation',
+		'ex_place_of_work',
+		'file_name',
+	),
+)); ?>

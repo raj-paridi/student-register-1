@@ -1,0 +1,31 @@
+#include<iostream.h>
+#include<fstream.h>
+#include<conio.h>
+int main()
+{
+ifstream a("ah.txt");
+char ch;
+int c=0,w=0,l=0;
+if(!a)
+{
+cout<<"error.......";
+return 1;
+}
+while(ch!=EOF)
+{
+a.get(ch);
+c++;
+if((ch==' ')&&(ch=='\n'))
+w++;
+if(ch=='\n')
+l++;
+}
+a.close();
+cout<<"characters: "<<c;
+cout<<"words: "<<w+1;
+cout<<"lines: "<<l+1;
+getch();
+return 0;
+}
+
+

@@ -1,0 +1,4 @@
+<?php
+echo "Your feed back successfully recieved.";
+
+?>

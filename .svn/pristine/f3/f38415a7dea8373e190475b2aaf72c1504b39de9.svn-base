@@ -1,0 +1,11 @@
+<?php
+/* @var $this FeedbackController */
+/* @var $model FeedBack */
+
+$this->breadcrumbs=array(
+	'Feed Backs'=>array('sent'),
+	$model->id,
+);
+
+echo "Your feed back successfully recieved.";
+?>
